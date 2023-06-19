@@ -474,5 +474,5 @@ $RECYCLE.BIN/
 *.msp
 
 # Windows shortcuts
-*.lnk
-API/appsettings.json
+# *.lnk
+# API/appsettings.json
