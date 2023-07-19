@@ -39,4 +39,12 @@ updateMember(member:Member){
     })
   )
 }
+
+SetMainPhoto(photoId:number){
+  return this.http.put(this.baseUrl + 'user/set-main-photo/' +photoId,{})
+}
+
+deletePhoto(photoId:number){
+return this.http.delete(this.baseUrl + 'user/delete-photo/' + photoId)
+}
 }

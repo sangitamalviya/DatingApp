@@ -471,10 +471,8 @@ $RECYCLE.BIN/
 *.msi
 *.msix
 *.msm
-*.msp
 
 # Windows shortcuts
 # *.lnk
 # API/appsettings.json
-API/appsettings.json
 API/appsettings.json
