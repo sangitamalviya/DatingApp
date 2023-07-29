@@ -56,7 +56,6 @@ this.memberService.SetMainPhoto(photo.id).subscribe({
 }
 
 initializeUploader(){
-  debugger
   this.uploader=new FileUploader({
     url:this.baseUrl + 'user/add-photo',
     authToken:'Bearer ' + this.user?.token,
@@ -73,7 +72,6 @@ initializeUploader(){
 
   this.uploader.onSuccessItem = (item,response,status,header) =>{
     if(response){
-      debugger
       const photo = JSON.parse(response);
       this.member?.photos.push(photo);
       if(photo.isMain && this.user && this.member){

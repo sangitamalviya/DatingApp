@@ -50,7 +50,6 @@ get400Error(){
         this.http.post(this.baseurl + 'account/register',{}).subscribe({
           next:response => console.log(response),
           error : error=> {
-            debugger
            console.error();
            this.validationsError=error;
           }

@@ -40,7 +40,6 @@ loadMember(){
 }
 
 updateMember(){
-  debugger
   this.memberService.updateMember(this.editForm?.value).subscribe({
     next:_=>{
       console.log(this.member);

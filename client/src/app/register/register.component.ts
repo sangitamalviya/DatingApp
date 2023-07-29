@@ -50,7 +50,6 @@ ngOnInit():void{
   this.maxDate.setFullYear(this.maxDate.getFullYear()-18);
 }
 register(){
-  debugger
   const dob=this.getDateOnly(this.registerForm.controls['dateofBirth'].value);
    const values = {...this.registerForm.value,dateofBirth:dob};
   console.log(values);
