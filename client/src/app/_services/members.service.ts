@@ -7,6 +7,7 @@ import { PaginatedResult } from '../_models/paginzation';
 import { UserParams } from '../_models/userparams';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
+import { getPaginzatedResult, getPaginzationHeader } from './PaginzationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -49,13 +50,13 @@ resetUserParams(){
   getMembers(userparams:UserParams){
    const response= this.memberCache.get(Object.values(userparams).join('-'));
    if(response) return of(response);
-    let params = this.getPaginzationHeader(userparams.pageNumber,userparams.pageSize);
+    let params = getPaginzationHeader(userparams.pageNumber,userparams.pageSize);
    // if(this.members.length>0)return of(this.members);
    params=params.append('minAge',userparams.minAge);
    params=params.append('maxAge',userparams.maxAge);
    params=params.append('gender',userparams.gender);
    params=params.append('orderBy',userparams.orderBy);
-    return this.getPaginzatedResult<Member[]>(this.baseUrl + 'user',params).pipe(
+    return getPaginzatedResult<Member[]>(this.baseUrl + 'user',params,this.http).pipe(
       map(response => {
         this.memberCache.set(Object.values(userparams).join('-'),response);
         return response;
@@ -95,35 +96,11 @@ addLike(username:string){
 }
 
 getLikes(predicate:string,pageNumber:number,pageSize:number){
-  let params=this.getPaginzationHeader(pageNumber,pageSize);
+  let params=getPaginzationHeader(pageNumber,pageSize);
   params=params.append('predicate',predicate);
-  return this.getPaginzatedResult<Member[]>(this.baseUrl + 'likes' , params);
+  return getPaginzatedResult<Member[]>(this.baseUrl + 'likes' , params,this.http);
 }
 
-private getPaginzatedResult<T>(url:string,params: HttpParams) {
-  const paginatedReslt:PaginatedResult<T>=new PaginatedResult<T>;
-  return this.http.get<T>(url, { observe: 'response', params }).pipe(
 
-    map(response => {
-      if (response.body) {
-      paginatedReslt.result = response.body;
-      }
-      const paginatoins = response.headers.get('Pagination');
-      if (paginatoins) {
-      paginatedReslt.paginzations = JSON.parse(paginatoins);
-      }
-      return paginatedReslt;
-    })
-  );
-}
-
-private getPaginzationHeader(pageNumber:number,pageSize:number) {
-  let params = new HttpParams();
-
-   params = params.append('pageNumber', pageNumber);
-    params = params.append('pageSize', pageSize);
-
-  return params;
-}
 
 }
