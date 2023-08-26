@@ -80,18 +80,20 @@ namespace API.signalR
               }
               else{
                 var connections=await PresenceTracker.GetConnectionsForUser(recipient.UserName);
+              
               if(connections!=null){
                 await _presenceHub.Clients.Clients(connections).SendAsync("NewMessageReceived",
                 new {username=sender.UserName,knownAs=sender.KnownAs});
               }
              
+              }
               _uow.MessageRepository.AddMessage(message);
               if(await _uow.Complete()) 
               {
                  await Clients.Group(groupName).SendAsync("NewMessage",_mapper.Map<MessageDto>(message));
 
               }
-        }}
+        }
 
       private async Task<Group> AddToGroup(string groupName){
         var group=await _uow.MessageRepository.GetMessageGroup(groupName);

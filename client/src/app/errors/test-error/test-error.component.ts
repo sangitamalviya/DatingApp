@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { subscribeOn } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-test-error',
@@ -8,7 +9,7 @@ import { subscribeOn } from 'rxjs';
   styleUrls: ['./test-error.component.css']
 })
 export class TestErrorComponent {
-baseurl='https://localhost:5001/api/';
+baseurl=environment.apiUrl;
 validationsError:string[]=[];
 constructor(private http:HttpClient){
 
