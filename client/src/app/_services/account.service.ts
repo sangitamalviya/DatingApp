@@ -59,7 +59,7 @@ register(model:any){
    this.presenceService.stopHubConnection();
   }
 
-  getDecodedToken(token:string){
+  getDecodedToken(token:any){
     return JSON.parse(atob(token.split('.')[1]));
 
   }

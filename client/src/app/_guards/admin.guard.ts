@@ -17,7 +17,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
       }else
       {
         toastr.error('You cannot enter this area');
-        debugger
         return false;
       }
      

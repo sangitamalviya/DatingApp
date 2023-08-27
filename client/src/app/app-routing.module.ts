@@ -5,7 +5,7 @@ import { MemberListComponent } from './member/member-list/member-list.component'
 import { MemberDetailsComponent } from './member/member-details/member-details.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { AuthGuard } from './_guard/auth.guard';
+import { authGuard } from './_guard/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path:'',
     runGuardsAndResolvers:'always',
-    canActivate:[AuthGuard],
+    canActivate:[authGuard],
     children:[
       {path:'members',component:MemberListComponent},
       {path:'members/:username',component:MemberDetailsComponent,resolve:{member:memberDetailedResolver}},

@@ -2,7 +2,6 @@ import { Member } from 'src/app/_models/member';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MembersService } from 'src/app/_services/members.service';
 import { ActivatedRoute } from '@angular/router';
-import {  NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 
 import { MessageService } from 'src/app/_services/message.service';
 import { Message } from 'src/app/_models/message';
@@ -15,6 +14,7 @@ import { PresenceService } from 'src/app/_services/presence.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { User } from 'src/app/_models/user';
 import { take } from 'rxjs';
+import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 
 
 @Component({
@@ -22,16 +22,17 @@ import { take } from 'rxjs';
   standalone:true,
   templateUrl: './member-details.component.html',
   styleUrls: ['./member-details.component.css'],
-  imports :[CommonModule,TabsModule,NgxGalleryModule,TimeagoModule,MemberMessagesComponent]
+  imports :[CommonModule,TabsModule,TimeagoModule,MemberMessagesComponent,GalleryModule]
 })
 export class MemberDetailsComponent implements OnInit,OnDestroy{
   @ViewChild('memberTabs',{static: true}) memberTabs?:TabsetComponent;
   member:Member ={} as Member;
-  galleryOptions:NgxGalleryOptions[]=[];
-  galleryImages:NgxGalleryImage[]=[];
+  // galleryOptions:NgxGalleryOptions[]=[];
+  // galleryImages:NgxGalleryImage[]=[];
   activaTab?:TabDirective;
   messages:Message[]=[];
   user?:User;
+  images:GalleryItem[]=[];
 
   constructor(private accountService:AccountService,private route:ActivatedRoute,
     private messageService:MessageService,public presenceService:PresenceService) { 
@@ -62,23 +63,16 @@ this.route.queryParams.subscribe({
 // preview:false
 // }]
 
+// this.galleryImages = this.getImages();
 this.getImages();
-
  }
 
  getImages(){
-  if(!this.member) return[];
-  const imageUrls=[];
-  for(const photo of this.member.photos){
-    imageUrls.push({
-      small:photo.url,
-      medium:photo.url,
-      big:photo.url
-    })
+   if(!this.member) return;
+   for(const photo of this.member.photos){
+   this.images.push(new ImageItem({src:photo.url,thumb:photo.url}))
   }
-
-  return imageUrls;
- }
+  }
 
 
  onTabActivated(data:TabDirective){
