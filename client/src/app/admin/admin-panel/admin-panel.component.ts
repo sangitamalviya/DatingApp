@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AdminPanelComponent {
   constructor() {
-    var test = '1';
+    var test = '34';
   }  
 }
