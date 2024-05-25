@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class AdminPanelComponent {
   constructor() {
     var test = '1';
-   
+    if (test == '1' || test == '2') { }
+  
   }  
 }
